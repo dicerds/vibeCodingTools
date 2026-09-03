@@ -1,23 +1,20 @@
-"use client";
 import ProjectList from "@/components/project-list";
+
+export const dynamic = "force-dynamic";
+
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 py-10 px-4 sm:px-8">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <header onClick={() => window.location.href = "/"} className="cursor-pointer flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-6 gap-4 select-none">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
-              <span className="px-2.5 py-1 rounded-lg bg-indigo-600 text-white text-xs font-mono font-bold tracking-wider">VIBE</span>
-              <span>Vibe Coder Toolkit</span>
-            </h1>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1">
-              Workspace terpusat dan generator starter kit 7 berkas .md (PRD, Architecture, Agents, TODO, Skill, Workflow, README).
-            </p>
-          </div>
+    <main className="min-h-screen p-6 sm:p-10 bg-slate-950 text-slate-100">
+      <div className="max-w-6xl mx-auto space-y-6">
+        <header className="border-b border-slate-800 pb-5">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Vibe Coder Toolkit
+          </h1>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">
+            Kompilasi spesifikasi dan starter kit dokumentasi AI siap pakai.
+          </p>
         </header>
-        <section>
-          <ProjectList />
-        </section>
+        <ProjectList />
       </div>
     </main>
   );

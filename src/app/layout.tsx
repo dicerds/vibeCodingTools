@@ -1,8 +1,9 @@
+import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Vibe Coder Toolkit",
-  description: "Project kickstarter and workspace for vibe coders",
+  description: "Starter kit dokumentasi proyek terstandar AI",
 };
 
 export default function RootLayout({
@@ -11,8 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id">
-      <body className="bg-slate-950 text-slate-100 antialiased">{children}</body>
+    <html lang="id" className="dark">
+      <body className="bg-slate-950 text-slate-100 min-h-screen antialiased font-sans">
+        {children}
+      </body>
     </html>
   );
 }
