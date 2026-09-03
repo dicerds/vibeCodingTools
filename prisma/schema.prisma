@@ -1,0 +1,80 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+enum DocType {
+  PRD
+  AGENTS
+  ARCHITECTURE
+  TODO
+  SKILL
+  WORKFLOW
+  README
+}
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  TRASHED
+}
+model Collection {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+}
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  projects     Project[]
+}
+model Project {
+  id          String         @id @default(uuid())
+  userId      String
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String
+  summary     String?
+  collection  String         @default("General")
+  status      ProjectStatus  @default(ACTIVE)
+  deletedAt   DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  input       ProjectInput?
+  documents   GeneratedDoc[]
+  files       ProjectFile[]
+}
+model ProjectInput {
+  id               String   @id @default(uuid())
+  projectId        String   @unique
+  project          Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  problemStatement String
+  targetUser       String
+  goals            String[]
+  features         String[]
+  techStack        String?
+  rawJson          Json?
+}
+model GeneratedDoc {
+  id              String   @id @default(uuid())
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  type            DocType
+  contentMarkdown String
+  updatedAt       DateTime @updatedAt
+  @@unique([projectId, type])
+}
+model ProjectFile {
+  id          String   @id @default(uuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  fileName    String
+  fileSize    Int
+  mimeType    String
+  storageKey  String
+  isGenerated Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
